@@ -4,3 +4,6 @@ Gemfile.bak
 .bundle
 vendor
 *~
+README.html
+\#*
+.#*
