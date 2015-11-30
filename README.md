@@ -2,6 +2,10 @@
 
 This is a plugin for [Logstash](https://github.com/elastic/logstash).
 
+The source for this plugin can be [found here on github](https://github.com/mikebski/logstash-datepart-plugin.git)
+
+Author: Mike Baranski (mike.baranski@gmail.com).  Contributions are welcome.
+
 ## License ##
 
 Copyright (c) 2014–2015 Mike Baranski <http://www.mikeski.net>
