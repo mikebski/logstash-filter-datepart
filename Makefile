@@ -15,7 +15,7 @@
 # Simple Makefile using gem2.0 to build Logstash plugin
 GEM=gem2.1
 LOGSTASH_HOME=/home/mike/apps/logstash-2.0.0
-VERSION=1.0.0
+VERSION=1.0.1
 GEM_NAME=logstash-filter-dateparts-$(VERSION).gem
 MARKDOWN_CMD=markdown_py
 
