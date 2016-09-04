@@ -56,15 +56,15 @@ describe LogStash::Filters::DateParts do
     f.filter(event)
     
     expect(event.to_hash().count).to eq(count + 8)
-    expect(event['sec']).to be_truthy
-    expect(event['hour']).to be_truthy
-    expect(event['min']).to be_truthy
-    expect(event['month']).to be_truthy
-    expect(event['year']).to be_truthy
-    expect(event['day']).to be_truthy
-    expect(event['wday']).to be_truthy
-    expect(event['yday']).to be_truthy
-    expect(event['tags']).to be_nil
+    expect(event.get('sec')).to be_truthy
+    expect(event.get('hour')).to be_truthy
+    expect(event.get('min')).to be_truthy
+    expect(event.get('month')).to be_truthy
+    expect(event.get('year')).to be_truthy
+    expect(event.get('day')).to be_truthy
+    expect(event.get('wday')).to be_truthy
+    expect(event.get('yday')).to be_truthy
+    expect(event.get('tags')).to be_nil
   end
 
   it "Should generate only the specified fields" do
@@ -75,15 +75,15 @@ describe LogStash::Filters::DateParts do
                                          })
     f.filter(event)
     expect(event.to_hash().count).to eq(count + 2)
-    expect(event['sec']).to be_truthy
-    expect(event['hour']).to be_truthy
-    expect(event['min']).to be_nil
-    expect(event['month']).to be_nil
-    expect(event['year']).to be_nil
-    expect(event['day']).to be_nil
-    expect(event['wday']).to be_nil
-    expect(event['yday']).to be_nil
-    expect(event['tags']).to be_nil
+    expect(event.get('sec')).to be_truthy
+    expect(event.get('hour')).to be_truthy
+    expect(event.get('min')).to be_nil
+    expect(event.get('month')).to be_nil
+    expect(event.get('year')).to be_nil
+    expect(event.get('day')).to be_nil
+    expect(event.get('wday')).to be_nil
+    expect(event.get('yday')).to be_nil
+    expect(event.get('tags')).to be_nil
   end
 
   it "Should set the error tag on an invalid time field" do
@@ -92,6 +92,6 @@ describe LogStash::Filters::DateParts do
     f = LogStash::Filters::DateParts.new({ "time_field" => alt_ts_field })
     
     f.filter(event)
-    expect(event['tags'].include? '_dateparts_error').to eq(true)
+    expect(event.get('tags').include? '_dateparts_error').to eq(true)
   end
 end

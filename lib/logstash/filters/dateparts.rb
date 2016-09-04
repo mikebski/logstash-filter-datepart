@@ -60,14 +60,14 @@ class LogStash::Filters::DateParts < LogStash::Filters::Base
   def filter(event)
     if @fields.respond_to?("each") and @fields.respond_to?("join")
       logger.debug? and logger.debug("DateParts plugin filtering #{@time_field} time_field and adding fields: " + @fields.join(", "))
-      t = get_time_from_field(event[@time_field])
+      t = get_time_from_field(event.get(@time_field))
       if t == nil
         plugin_error("Invalid time field #{@time_field}; Time field must be an instance of Time or provide a time method that returns one", event)
         return
       end
       @fields.each do |field|
         begin
-          event[field] = t.send(field)
+          event.set(field, t.send(field))
         rescue
           plugin_error("No such method: #{field}\n", event)
         end
