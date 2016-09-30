@@ -49,7 +49,6 @@ class LogStash::Filters::DateParts < LogStash::Filters::Base
     if f.class == Time
       return f
     elsif f.respond_to?("time")
-      logger.info("Class is #{f.class}")
       return f.time()
     else
       return nil

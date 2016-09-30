@@ -13,9 +13,9 @@
 # limitations under the License.
 
 # Simple Makefile using gem2.0 to build Logstash plugin
-GEM=gem2.0
+GEM=gem
 LOGSTASH_HOME=/home/mike/apps/logstash-2.0.0
-VERSION=2.0
+VERSION=2.1
 GEM_NAME=logstash-filter-dateparts-$(VERSION).gem
 MARKDOWN_CMD=markdown
 
