@@ -50,6 +50,8 @@ class LogStash::Filters::DateParts < LogStash::Filters::Base
       f
     elsif f.respond_to?('time')
       f.time
+    elsif f.respond_to?('to_time')
+      f.to_time
     else
       nil
     end

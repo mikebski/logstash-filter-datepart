@@ -26,7 +26,21 @@ end
 describe LogStash::Filters::DateParts do
   default_ts = '@timestamp'
   alt_ts_field = 'zxlk'
-  
+
+  it 'Get time from field should work with Time' do
+    f = LogStash::Filters::DateParts.new({})
+    field_to_test = Time.new
+    val = f.get_time_from_field(field_to_test);
+    expect(val.class).to be(Time)
+  end
+
+  it 'Get time from field should work with DateTime' do
+    f = LogStash::Filters::DateParts.new({})
+    field_to_test = DateTime.new
+    val = f.get_time_from_field(field_to_test);
+    expect(val.class).to be(Time)
+  end
+
   it 'Default config should result in filter with 8 functions, one error tag and @timestamp as the time field' do
     f = LogStash::Filters::DateParts.new({})
     
