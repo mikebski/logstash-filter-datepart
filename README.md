@@ -30,6 +30,7 @@ This plugin is useful if you want to easily query Logstash data on *day of week*
 
 * day
 * wday
+* mday
 * yday
 * month
 * year
@@ -107,6 +108,22 @@ By default, the plugin will use the *@timestamp* field, but you can specify a di
 	   	     "time_field" => "some_other_field"
 	   }
     }
+
+#### Duration Field (new in 2.1)
+
+2.1 provides the ability to calculate a duration (in seconds.milliseconds) based on 2 field.s
+The value of the duration is a float with millisecond precision.
+
+The input values must both be time values, and you specify an output field for the result
+
+    filter {
+         'fields' => %w(mday),
+         'duration' => {
+             'start_field' => 'tstart',
+             'end_field' => 'tend',
+             'result_field' => 'duration'
+         }
+     }
 
 #### Error Tags
 

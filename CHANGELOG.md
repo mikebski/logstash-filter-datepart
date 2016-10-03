@@ -1,3 +1,6 @@
+# 2.1.1
+  - Support for caluclating a duration - https://github.com/mikebski/logstash-filter-datepart/issues/4
+  
 # 2.0.1
   - Removed extraneous output statement from
     https://github.com/mikebski/logstash-filter-datepart/issues/3
