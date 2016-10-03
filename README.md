@@ -7,6 +7,7 @@ The source for this plugin can be [found here on github](https://github.com/mike
 Author: Mike Baranski (mike.baranski@gmail.com).  Contributions are welcome.
 
 [![Gem Version](https://badge.fury.io/rb/logstash-filter-dateparts.svg)](https://badge.fury.io/rb/logstash-filter-dateparts)
+[![Build Status](https://travis-ci.org/mikebski/logstash-filter-datepart.svg?branch=master)](https://travis-ci.org/mikebski/logstash-filter-datepart)
 
 ## License ##
 
