@@ -1,5 +1,7 @@
 # 2.1.1
-  - Support for caluclating a duration - https://github.com/mikebski/logstash-filter-datepart/issues/4
+  - Added support for caluclating a duration - https://github.com/mikebski/logstash-filter-datepart/issues/4
+  - Added support for DateTime and other objects with a to_date method
+  - Added TravisCI build hook
   
 # 2.0.1
   - Removed extraneous output statement from
