@@ -187,4 +187,20 @@ describe LogStash::Filters::DateParts do
 
   end
 
+  it 'Should warn and return 0.0 if start and end are the same field' do
+    event = get_event
+    f = LogStash::Filters::DateParts.new({
+                                             'duration' => {
+                                                 'start_field' => 'tstart',
+                                                 'end_field' => 'tstart',
+                                                 'result_field' => 'duration'
+                                             }
+                                         })
+
+    event.set('tstart', DateTime.new(2016, 1, 1, 20, 0, 0).to_time)
+    f.filter(event)
+    expect(event.get('tags')).to be_nil
+    expect(event.get('duration')).to eq(0.0)
+    expect(event.get('mday')).to be > -1
+  end
 end

@@ -36,6 +36,7 @@ class LogStash::Filters::DateParts < LogStash::Filters::Base
   config :error_tags, :validate => :array, :default => ['_dateparts_error'], :required => true
   config :duration, :validate => :hash, :required => false
   public
+
   def register
     logger.debug? and logger.debug('DateParts filter registered')
   end
@@ -77,21 +78,34 @@ class LogStash::Filters::DateParts < LogStash::Filters::Base
       end
     end
     if @duration != nil
-      start_time = get_time_from_field(event.get(@duration['start_field']))
-      end_time = get_time_from_field(event.get(@duration['end_field']))
-      result_field = @duration['result_field']
-
-      if result_field == nil
-        result_field = 'duration_result'
+      start_field = @duration['start_field']
+      if(start_field == nil)
+        start_field = '@timestamp'
       end
+      start_time = get_time_from_field(event.get(start_field))
+
+      end_field = @duration['end_field']
+      if(end_field == nil)
+        end_field = '@timestamp'
+      end
+      end_time = get_time_from_field(event.get(end_field))
 
       if start_time == nil or end_time == nil
         plugin_error("Invalid start [#{@duration['start_field']}] or end [#{@duration['end_field']}].  Time fields must be an instance of Time or provide a time method that returns one", event)
         return
       end
-      # Set invalid = false if we have a valid duration and valid event_time
+      if(start_field.eql?(end_field))
+        logger.warn("Start and End fields are the same for dateparts filter [#{start_field}]")
+      end
+
+      result_field = @duration['result_field']
+      if result_field == nil
+        result_field = 'duration_result'
+      end
+
       duration = end_time - start_time
       event.set(result_field, duration)
+      invalid = false
     end
     if invalid
       plugin_error('DateParts plugin error', event)
