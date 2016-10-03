@@ -31,10 +31,10 @@ class LogStash::Filters::DateParts < LogStash::Filters::Base
   # }
   #
   config_name 'dateparts'
-  config :fields, :validate => :array, :default => %w(day wday yday month year hour min sec), :required => true
+  config :fields, :validate => :array, :default => %w(day wday yday mday month year hour min sec), :required => true
   config :time_field, :validate => :string, :default => '@timestamp', :required => true
   config :error_tags, :validate => :array, :default => ['_dateparts_error'], :required => true
-
+  config :duration, :validate => :hash, :required => false
   public
   def register
     logger.debug? and logger.debug('DateParts filter registered')
@@ -57,22 +57,42 @@ class LogStash::Filters::DateParts < LogStash::Filters::Base
 
   public
   def filter(event)
+    invalid = true
+    event_time = get_time_from_field(event.get(@time_field))
+    if event_time == nil
+      plugin_error("Invalid time field #{@time_field}; Time field must be an instance of Time or provide a time method that returns one", event)
+      return
+    end
     if @fields.respond_to?('each') and @fields.respond_to?('join')
+      invalid = false
       logger.debug? and logger.debug("DateParts plugin filtering #{@time_field} time_field and adding fields: " + @fields.join(', '))
-      t = get_time_from_field(event.get(@time_field))
-      if t == nil
-        plugin_error("Invalid time field #{@time_field}; Time field must be an instance of Time or provide a time method that returns one", event)
-        return
-      end
       @fields.each do |field|
         begin
-          event.set(field, t.send(field))
+          event.set(field, event_time.send(field))
         rescue
           plugin_error("No such method: #{field}\n", event)
         end
       end
-    else
-      plugin_error('DateParts plugin fields invalid, should be an array of function names', event)
+    end
+    if @duration != nil
+      start_time = get_time_from_field(event.get(@duration['start_field']))
+      end_time = get_time_from_field(event.get(@duration['end_field']))
+      result_field = @duration['result_field']
+
+      if result_field == nil
+        result_field = 'duration_result'
+      end
+
+      if start_time == nil or end_time == nil
+        plugin_error("Invalid start [#{@duration['start_field']}] or end [#{@duration['end_field']}].  Time fields must be an instance of Time or provide a time method that returns one", event)
+        return
+      end
+      # Set invalid = false if we have a valid duration and valid event_time
+      duration = end_time - start_time
+      event.set(result_field, duration)
+    end
+    if invalid
+      plugin_error('DateParts plugin error', event)
       return
     end
 
