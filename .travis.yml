@@ -7,3 +7,6 @@ rvm:
   - jruby-1.7.23
 script:
 - bundle exec rspec spec
+addons:
+    code_climate:
+        repo_token: 6a1c688e9dd3dced0a75faa22eab8a09b5a807a8e8023d0d38ce3738675d0f63
