@@ -13,4 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
+
 require "logstash/devutils/rspec/spec_helper"
