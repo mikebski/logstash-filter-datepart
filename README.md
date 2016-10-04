@@ -8,6 +8,7 @@ Author: Mike Baranski (mike.baranski@gmail.com).  Contributions are welcome.
 
 [![Gem Version](https://badge.fury.io/rb/logstash-filter-dateparts.svg)](https://badge.fury.io/rb/logstash-filter-dateparts)
 [![Build Status](https://travis-ci.org/mikebski/logstash-filter-datepart.svg?branch=master)](https://travis-ci.org/mikebski/logstash-filter-datepart)
+[![Code Climate](https://codeclimate.com/github/mikebski/logstash-filter-datepart/badges/gpa.svg)](https://codeclimate.com/github/mikebski/logstash-filter-datepart)
 [![Issue Count](https://codeclimate.com/github/mikebski/logstash-filter-datepart/badges/issue_count.svg)](https://codeclimate.com/github/mikebski/logstash-filter-datepart)
 
 ## License ##
