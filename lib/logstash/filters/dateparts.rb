@@ -35,7 +35,6 @@ class LogStash::Filters::DateParts < LogStash::Filters::Base
   config :time_field, :validate => :string, :default => '@timestamp', :required => true
   config :error_tags, :validate => :array, :default => ['_dateparts_error'], :required => true
   config :duration, :validate => :hash, :required => false
-  public
 
   def register
     logger.debug? and logger.debug('DateParts filter registered')
@@ -58,7 +57,6 @@ class LogStash::Filters::DateParts < LogStash::Filters::Base
     end
   end
 
-  public
   def filter(event)
     invalid = true
     event_time = get_time_from_field(event.get(@time_field))
