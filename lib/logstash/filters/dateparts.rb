@@ -57,6 +57,14 @@ class LogStash::Filters::DateParts < LogStash::Filters::Base
     end
   end
 
+  def get_value_with_default(hash, key, default)
+    if(hash[key] == nil)
+      default
+    else
+      hash[key]
+    end
+  end
+
   def filter(event)
     event_time = get_time_from_field(event.get(@time_field))
     if event_time == nil
@@ -74,16 +82,10 @@ class LogStash::Filters::DateParts < LogStash::Filters::Base
       end
     end
     if @duration != nil
-      start_field = @duration['start_field']
-      if(start_field == nil)
-        start_field = '@timestamp'
-      end
+      start_field = get_value_with_default(@duration, 'start_field', '@timestamp');
       start_time = get_time_from_field(event.get(start_field))
 
-      end_field = @duration['end_field']
-      if(end_field == nil)
-        end_field = '@timestamp'
-      end
+      end_field = get_value_with_default(@duration, 'end_field', '@timestamp')
       end_time = get_time_from_field(event.get(end_field))
 
       if start_time == nil or end_time == nil
@@ -94,11 +96,7 @@ class LogStash::Filters::DateParts < LogStash::Filters::Base
         logger.warn("Start and End fields are the same for dateparts filter [#{start_field}]")
       end
 
-      result_field = @duration['result_field']
-      if result_field == nil
-        result_field = 'duration_result'
-      end
-
+      result_field = get_value_with_default(@duration, 'result_field', 'duration_result')
       duration = end_time - start_time
       event.set(result_field, duration)
     end

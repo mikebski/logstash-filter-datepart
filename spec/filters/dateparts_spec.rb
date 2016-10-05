@@ -143,8 +143,6 @@ describe LogStash::Filters::DateParts do
                                                  'result_field' => 'duration'
                                              }
                                          })
-    puts f.logger
-    f.logger
     event.set('tstart', DateTime.new(2016, 1, 1, 12, 0, 0).to_time)
     event.set('tend', DateTime.new(2016, 1, 1, 12, 0, 0).to_time)
     f.filter(event)
@@ -268,5 +266,29 @@ describe LogStash::Filters::DateParts do
     f.filter(event)
     expect(event.get('tags')).to be_nil
     expect(event.get('duration_result')).to eq(1.0)
+  end
+
+  it 'Should return value from hash' do
+    f = LogStash::Filters::DateParts.new({
+                                             'duration' => {
+                                                 'start_field' => 'tstart',
+                                                 'end_field' => 'tend',
+                                             }
+                                         })
+    test_hash = {'val_name' => 1}
+    val = f.get_value_with_default(test_hash, 'val_name', 'blah');
+    expect(val).to eq(1)
+  end
+
+  it 'Should return default value from hash' do
+    f = LogStash::Filters::DateParts.new({
+                                             'duration' => {
+                                                 'start_field' => 'tstart',
+                                                 'end_field' => 'tend',
+                                             }
+                                         })
+    test_hash = {'val_name' => 1}
+    val = f.get_value_with_default(test_hash, 'xyza', 2);
+    expect(val).to eq(2)
   end
 end
