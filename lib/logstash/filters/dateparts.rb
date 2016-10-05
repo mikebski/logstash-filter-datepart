@@ -81,16 +81,16 @@ class LogStash::Filters::DateParts < LogStash::Filters::Base
     end
     if @duration != nil
       start_time = get_time_from_field(event.get(get_hash_value(@duration, 'start_field', '@timestamp')))
-
       end_time = get_time_from_field(event.get(get_hash_value(@duration, 'end_field', '@timestamp')))
 
-      if start_time == nil or end_time == nil
+      begin
+        result_field = get_hash_value(@duration, 'result_field', 'duration_result')
+        duration = end_time - start_time
+        event.set(result_field, duration)
+      rescue
         plugin_error('Invalid start or end for duration.  Time fields must be an instance of Time or provide a time method that returns one', event)
         return
       end
-      result_field = get_hash_value(@duration, 'result_field', 'duration_result')
-      duration = end_time - start_time
-      event.set(result_field, duration)
     end
 
     filter_matched(event)
