@@ -14,6 +14,7 @@
 # limitations under the License.
 
 require 'spec_helper'
+require 'logstash/logging/logger'
 require 'logstash/filters/dateparts'
 require 'logstash/timestamp'
 require 'logstash/event'
@@ -142,7 +143,8 @@ describe LogStash::Filters::DateParts do
                                                  'result_field' => 'duration'
                                              }
                                          })
-
+    puts f.logger
+    f.logger
     event.set('tstart', DateTime.new(2016, 1, 1, 12, 0, 0).to_time)
     event.set('tend', DateTime.new(2016, 1, 1, 12, 0, 0).to_time)
     f.filter(event)
@@ -202,5 +204,69 @@ describe LogStash::Filters::DateParts do
     expect(event.get('tags')).to be_nil
     expect(event.get('duration')).to eq(0.0)
     expect(event.get('mday')).to be > -1
+  end
+
+  it 'Should return an error on nil start time' do
+    event = get_event
+    f = LogStash::Filters::DateParts.new({
+                                             'duration' => {
+                                                 'start_field' => 'tstart',
+                                                 'end_field' => 'tend',
+                                                 'result_field' => 'duration'
+                                             }
+                                         })
+
+    event.set('tstart', nil)
+    event.set('tend', DateTime.new(2016, 1, 1, 23, 0, 1).to_time)
+    f.filter(event)
+    expect(event.get('tags').include? '_dateparts_error').to eq(true)
+  end
+
+  it 'Should return an error on nil end time' do
+    event = get_event
+    f = LogStash::Filters::DateParts.new({
+                                             'duration' => {
+                                                 'start_field' => 'tstart',
+                                                 'end_field' => 'tend',
+                                                 'result_field' => 'duration'
+                                             }
+                                         })
+
+    event.set('tstart', DateTime.new(2016, 1, 1, 23, 0, 1).to_time)
+    event.set('tend', nil)
+    f.filter(event)
+    expect(event.get('tags').include? '_dateparts_error').to eq(true)
+  end
+
+  it 'Should use duration_result as the result field if it is not set' do
+    event = get_event
+    f = LogStash::Filters::DateParts.new({
+                                             'duration' => {
+                                                 'start_field' => 'tstart',
+                                                 'end_field' => 'tend',
+                                             }
+                                         })
+
+    event.set('tstart', DateTime.new(2016, 1, 1, 23, 0, 0).to_time)
+    event.set('tend', DateTime.new(2016, 1, 1, 23, 0, 1).to_time)
+    f.filter(event)
+    expect(event.get('tags')).to be_nil
+    expect(event.get('duration_result')).to eq(1.0)
+  end
+
+  it 'Should hit debugging statement' do
+    event = get_event
+    f = LogStash::Filters::DateParts.new({
+                                             'duration' => {
+                                                 'start_field' => 'tstart',
+                                                 'end_field' => 'tend',
+                                             }
+                                         })
+    #f.logger.setLevel(Level.valueOf('DEBUG'))
+    event.set('tstart', DateTime.new(2016, 1, 1, 23, 0, 0).to_time)
+    event.set('tend', DateTime.new(2016, 1, 1, 23, 0, 1).to_time)
+    f.filter(event)
+    expect(event.get('tags')).to be_nil
+    expect(event.get('duration_result')).to eq(1.0)
   end
 end

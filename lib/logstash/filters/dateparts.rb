@@ -58,14 +58,12 @@ class LogStash::Filters::DateParts < LogStash::Filters::Base
   end
 
   def filter(event)
-    invalid = true
     event_time = get_time_from_field(event.get(@time_field))
     if event_time == nil
       plugin_error("Invalid time field #{@time_field}; Time field must be an instance of Time or provide a time method that returns one", event)
       return
     end
     if @fields.respond_to?('each') and @fields.respond_to?('join')
-      invalid = false
       logger.debug? and logger.debug("DateParts plugin filtering #{@time_field} time_field and adding fields: " + @fields.join(', '))
       @fields.each do |field|
         begin
@@ -103,11 +101,6 @@ class LogStash::Filters::DateParts < LogStash::Filters::Base
 
       duration = end_time - start_time
       event.set(result_field, duration)
-      invalid = false
-    end
-    if invalid
-      plugin_error('DateParts plugin error', event)
-      return
     end
 
     filter_matched(event)
