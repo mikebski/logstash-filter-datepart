@@ -276,7 +276,7 @@ describe LogStash::Filters::DateParts do
                                              }
                                          })
     test_hash = {'val_name' => 1}
-    val = f.get_value_with_default(test_hash, 'val_name', 'blah');
+    val = f.get_hash_value(test_hash, 'val_name', 'blah');
     expect(val).to eq(1)
   end
 
@@ -288,7 +288,7 @@ describe LogStash::Filters::DateParts do
                                              }
                                          })
     test_hash = {'val_name' => 1}
-    val = f.get_value_with_default(test_hash, 'xyza', 2);
+    val = f.get_hash_value(test_hash, 'xyza', 2);
     expect(val).to eq(2)
   end
 end

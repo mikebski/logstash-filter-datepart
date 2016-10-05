@@ -57,7 +57,7 @@ class LogStash::Filters::DateParts < LogStash::Filters::Base
     end
   end
 
-  def get_value_with_default(hash, key, default)
+  def get_hash_value(hash, key, default)
     if(hash[key] == nil)
       default
     else
@@ -82,21 +82,15 @@ class LogStash::Filters::DateParts < LogStash::Filters::Base
       end
     end
     if @duration != nil
-      start_field = get_value_with_default(@duration, 'start_field', '@timestamp');
-      start_time = get_time_from_field(event.get(start_field))
+      start_time = get_time_from_field(event.get(get_hash_value(@duration, 'start_field', '@timestamp')))
 
-      end_field = get_value_with_default(@duration, 'end_field', '@timestamp')
-      end_time = get_time_from_field(event.get(end_field))
+      end_time = get_time_from_field(event.get(get_hash_value(@duration, 'end_field', '@timestamp')))
 
       if start_time == nil or end_time == nil
-        plugin_error("Invalid start [#{@duration['start_field']}] or end [#{@duration['end_field']}].  Time fields must be an instance of Time or provide a time method that returns one", event)
+        plugin_error('Invalid start or end for duration.  Time fields must be an instance of Time or provide a time method that returns one', event)
         return
       end
-      if(start_field.eql?(end_field))
-        logger.warn("Start and End fields are the same for dateparts filter [#{start_field}]")
-      end
-
-      result_field = get_value_with_default(@duration, 'result_field', 'duration_result')
+      result_field = get_hash_value(@duration, 'result_field', 'duration_result')
       duration = end_time - start_time
       event.set(result_field, duration)
     end
