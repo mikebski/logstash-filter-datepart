@@ -58,7 +58,7 @@ class LogStash::Filters::DateParts < LogStash::Filters::Base
   end
 
   def get_hash_value(hash, key, default)
-    if(hash[key] == nil)
+    if (hash[key] == nil)
       default
     else
       hash[key]
@@ -71,14 +71,12 @@ class LogStash::Filters::DateParts < LogStash::Filters::Base
       plugin_error("Invalid time field #{@time_field}; Time field must be an instance of Time or provide a time method that returns one", event)
       return
     end
-    if @fields.respond_to?('each') and @fields.respond_to?('join')
-      logger.debug? and logger.debug("DateParts plugin filtering #{@time_field} time_field and adding fields: " + @fields.join(', '))
-      @fields.each do |field|
-        begin
-          event.set(field, event_time.send(field))
-        rescue
-          plugin_error("No such method: #{field}\n", event)
-        end
+    logger.debug? and logger.debug("DateParts plugin filtering #{@time_field} time_field and adding fields: " + @fields.join(', '))
+    @fields.each do |field|
+      begin
+        event.set(field, event_time.send(field))
+      rescue
+        plugin_error("No such method: #{field}\n", event)
       end
     end
     if @duration != nil
