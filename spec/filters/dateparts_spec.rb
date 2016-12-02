@@ -44,7 +44,7 @@ describe LogStash::Filters::DateParts do
 
   it 'Default config should result in filter with 8 functions, one error tag and @timestamp as the time field' do
     f = LogStash::Filters::DateParts.new({})
-    
+
     expect(f.class).to eq(LogStash::Filters::DateParts)
     expect(f.fields.length).to eq(9)
     expect(f.time_field).to eq(default_ts)
@@ -53,10 +53,10 @@ describe LogStash::Filters::DateParts do
 
   it 'Config should result in filter with 2 functions and the alt timestamp field' do
     f = LogStash::Filters::DateParts.new({
-                                           'fields' => %w(sec hour),
-                                           'time_field' => alt_ts_field
+                                             'fields' => %w(sec hour),
+                                             'time_field' => alt_ts_field
                                          })
-    
+
     expect(f.class).to eq(LogStash::Filters::DateParts)
     expect(f.fields.length).to eq(2)
     expect(f.fields[0]).to eq('sec')
@@ -68,7 +68,7 @@ describe LogStash::Filters::DateParts do
     count = event.to_hash.count
     f = LogStash::Filters::DateParts.new({})
     f.filter(event)
-    
+
     expect(event.to_hash.count).to eq(count + 9)
     expect(event.get('sec')).to be_truthy
     expect(event.get('hour')).to be_truthy
@@ -86,7 +86,7 @@ describe LogStash::Filters::DateParts do
     event = get_event
     count = event.to_hash.count
     f = LogStash::Filters::DateParts.new({
-                                           'fields' => %w(sec hour)
+                                             'fields' => %w(sec hour)
                                          })
     f.filter(event)
     expect(event.to_hash.count).to eq(count + 2)
@@ -104,8 +104,8 @@ describe LogStash::Filters::DateParts do
 
   it 'Should set the error tag on an invalid time field' do
     event = get_event
-    f = LogStash::Filters::DateParts.new({ 'time_field' => alt_ts_field })
-    
+    f = LogStash::Filters::DateParts.new({'time_field' => alt_ts_field})
+
     f.filter(event)
     expect(event.get('tags').include? '_dateparts_error').to eq(true)
   end
@@ -122,11 +122,11 @@ describe LogStash::Filters::DateParts do
   it 'Should calculate a duration' do
     event = get_event
     f = LogStash::Filters::DateParts.new({
-        'duration' => {
-            'start_field' => '@timestamp',
-            'end_field' => 'sometime',
-            'result_field' => 'duration'
-        }
+                                             'duration' => {
+                                                 'start_field' => '@timestamp',
+                                                 'end_field' => 'sometime',
+                                                 'result_field' => 'duration'
+                                             }
                                          })
     event.set('sometime', Time.new)
     f.filter(event)
