@@ -13,7 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require "codeclimate-test-reporter"
-CodeClimate::TestReporter.start
+# Fix for CC 1.0 per notes at:
+# https://github.com/codeclimate/ruby-test-reporter/blob/master/CHANGELOG.md#v100-2016-11-03
+require 'simplecov'
+SimpleCov.start
 
 require "logstash/devutils/rspec/spec_helper"
