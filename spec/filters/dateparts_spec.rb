@@ -79,7 +79,7 @@ describe LogStash::Filters::DateParts do
     expect(event.get('wday')).to be_truthy
     expect(event.get('mday')).to be_truthy
     expect(event.get('yday')).to be_truthy
-    expect(event.get('tags')).to be_nil
+    expect(event.get('tags')).to be_falsy
   end
 
   it 'Should generate only the specified fields' do
@@ -99,7 +99,7 @@ describe LogStash::Filters::DateParts do
     expect(event.get('wday')).to be_nil
     expect(event.get('mday')).to be_nil
     expect(event.get('yday')).to be_nil
-    expect(event.get('tags')).to be_nil
+    expect(event.get('tags')).to be_falsy
   end
 
   it 'Should set the error tag on an invalid time field' do
@@ -130,7 +130,7 @@ describe LogStash::Filters::DateParts do
                                          })
     event.set('sometime', Time.new)
     f.filter(event)
-    expect(event.get('tags')).to be_nil
+    expect(event.get('tags')).to be_falsy
     expect(event.get('duration')).to be > 0
   end
 
@@ -146,7 +146,7 @@ describe LogStash::Filters::DateParts do
     event.set('tstart', DateTime.new(2016, 1, 1, 12, 0, 0).to_time)
     event.set('tend', DateTime.new(2016, 1, 1, 12, 0, 0).to_time)
     f.filter(event)
-    expect(event.get('tags')).to be_nil
+    expect(event.get('tags')).to be_falsy
     expect(event.get('duration')).to eq(0.0)
   end
 
@@ -163,7 +163,7 @@ describe LogStash::Filters::DateParts do
     event.set('tstart', DateTime.new(2016, 1, 1, 23, 0, 0).to_time)
     event.set('tend', DateTime.new(2016, 1, 1, 23, 0, 1).to_time)
     f.filter(event)
-    expect(event.get('tags')).to be_nil
+    expect(event.get('tags')).to be_falsy
     expect(event.get('duration')).to eq(1.0)
   end
 
@@ -181,7 +181,7 @@ describe LogStash::Filters::DateParts do
     event.set('tstart', DateTime.new(2016, 1, 1, 20, 0, 0).to_time)
     event.set('tend', DateTime.new(2016, 1, 1, 21, 0, 0).to_time)
     f.filter(event)
-    expect(event.get('tags')).to be_nil
+    expect(event.get('tags')).to be_falsy
     expect(event.get('duration')).to eq(3600.0)
     expect(event.get('mday')).to be > -1
 
@@ -199,7 +199,7 @@ describe LogStash::Filters::DateParts do
 
     event.set('tstart', DateTime.new(2016, 1, 1, 20, 0, 0).to_time)
     f.filter(event)
-    expect(event.get('tags')).to be_nil
+    expect(event.get('tags')).to be_falsy
     expect(event.get('duration')).to eq(0.0)
     expect(event.get('mday')).to be > -1
   end
@@ -248,7 +248,7 @@ describe LogStash::Filters::DateParts do
     event.set('tstart', DateTime.new(2016, 1, 1, 23, 0, 0).to_time)
     event.set('tend', DateTime.new(2016, 1, 1, 23, 0, 1).to_time)
     f.filter(event)
-    expect(event.get('tags')).to be_nil
+    expect(event.get('tags')).to be_falsy
     expect(event.get('duration_result')).to eq(1.0)
   end
 
@@ -264,7 +264,7 @@ describe LogStash::Filters::DateParts do
     event.set('tstart', DateTime.new(2016, 1, 1, 23, 0, 0).to_time)
     event.set('tend', DateTime.new(2016, 1, 1, 23, 0, 1).to_time)
     f.filter(event)
-    expect(event.get('tags')).to be_nil
+    expect(event.get('tags')).to be_falsy
     expect(event.get('duration_result')).to eq(1.0)
   end
 
