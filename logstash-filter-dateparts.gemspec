@@ -15,15 +15,16 @@
 # limitations under the License.
 
 Gem::Specification.new do |s|
-  s.name = 'logstash-filter-dateparts'
-  s.version         = '2.1.1'
-  s.licenses = ['Apache License (2.0)']
-  s.summary = 'This dateparts fileter adds date information to your event based on your timestamp'
-  s.description = 'This gem is a logstash plugin required to be installed on top of the Logstash core pipeline using $LS_HOME/bin/plugin install gemname. This gem is not a stand-alone program'
-  s.authors = ['Mike Baranski']
-  s.email = 'mike.baranski@gmail.com'
-  s.homepage = 'http://mikeski.net'
+  s.name          = 'logstash-filter-dateparts'
+  s.version       = '2.1.1'
+  s.licenses      = ['Apache License (2.0)']
+  s.summary       = 'This dateparts fileter adds date information to your event based on your timestamp'
+  s.description   = 'This gem is a logstash plugin required to be installed on top of the Logstash core pipeline using $LS_HOME/bin/plugin install gemname. This gem is not a stand-alone program'
+  s.authors       = ['Mike Baranski']
+  s.email         = 'ike.baranski@gmail.com'
+  s.homepage      = 'http://mikeski.net'
   s.require_paths = ['lib']
+  s.platform      = "java"
 
   # Files
   s.files = Dir['lib/**/*','spec/**/*','vendor/**/*','*.gemspec','*.md','Gemfile','LICENSE']
@@ -35,5 +36,10 @@ Gem::Specification.new do |s|
 
   # Gem dependencies
   s.add_runtime_dependency 'logstash-core-plugin-api', '>= 1.60', '<= 2.99'
-  s.add_development_dependency 'logstash-devutils', '1.1.0'
+  
+  s.add_development_dependency "jar-dependencies"
+
+  s.add_development_dependency 'ruby-maven', '~> 3.3'
+
+  s.add_development_dependency 'logstash-devutils'
 end
