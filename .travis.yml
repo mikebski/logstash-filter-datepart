@@ -11,6 +11,7 @@ rvm:
   - jruby-9.1.5.0
 before-install: []
 script:
+- gem list
 - bundle exec rspec spec
 - bundle exec codeclimate-test-reporter
 env:
