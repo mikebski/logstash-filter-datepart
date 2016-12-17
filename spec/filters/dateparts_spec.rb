@@ -69,9 +69,8 @@ describe LogStash::Filters::DateParts do
     f = LogStash::Filters::DateParts.new({})
     f.filter(event)
 
-    puts("EVT")
-    puts(event.to_hash)
-    expect(event.to_hash.count).to eq(count + 9)
+    #puts(event.to_hash)
+    expect(event.to_hash.count).to eq(count + 10)
     expect(event.get('sec')).to be_truthy
     expect(event.get('hour')).to be_truthy
     expect(event.get('min')).to be_truthy
@@ -91,7 +90,7 @@ describe LogStash::Filters::DateParts do
                                              'fields' => %w(sec hour)
                                          })
     f.filter(event)
-    expect(event.to_hash.count).to eq(count + 2)
+    expect(event.to_hash.count).to eq(count + 3)
     expect(event.get('sec')).to be_truthy
     expect(event.get('hour')).to be_truthy
     expect(event.get('min')).to be_nil
