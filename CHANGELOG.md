@@ -1,3 +1,7 @@
+# 2.2
+  - Changes for new logstash devel gem
+  - Make updates for travis ci to fix https://github.com/mikebski/logstash-filter-datepart/issues/5
+	
 # 2.1.1
   - Added support for caluclating a duration - https://github.com/mikebski/logstash-filter-datepart/issues/4
   - Added support for DateTime and other objects with a to_date method
