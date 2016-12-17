@@ -69,6 +69,8 @@ describe LogStash::Filters::DateParts do
     f = LogStash::Filters::DateParts.new({})
     f.filter(event)
 
+    puts("EVT")
+    puts(event.to_hash)
     expect(event.to_hash.count).to eq(count + 9)
     expect(event.get('sec')).to be_truthy
     expect(event.get('hour')).to be_truthy
