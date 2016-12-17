@@ -6,8 +6,8 @@ The source for this plugin can be [found here on github](https://github.com/mike
 
 Author: Mike Baranski (mike.baranski@gmail.com).  Contributions are welcome.
 
-[![Gem Version](https://badge.fury.io/rb/logstash-filter-dateparts.svg)](https://badge.fury.io/rb/logstash-filter-dateparts)
-[![Build Status](https://travis-ci.org/mikebski/logstash-filter-datepart.svg?branch=master)](https://travis-ci.org/mikebski/logstash-filter-datepart)
+[![Gem Version](https://badge.fury.io/rb/logstash-filter-dateparts.svg)](https://badge.fury.io/rb/logstash-filter-dateparts?reload=1)
+[![Build Status](https://travis-ci.org/mikebski/logstash-filter-datepart.svg?branch=master)](https://travis-ci.org/mikebski/logstash-filter-datepart?reload=1)
 [![Test Coverage](https://codeclimate.com/github/mikebski/logstash-filter-datepart/badges/coverage.svg?reload=1)](https://codeclimate.com/github/mikebski/logstash-filter-datepart/coverage)
 [![Code Climate](https://codeclimate.com/github/mikebski/logstash-filter-datepart/badges/gpa.svg?reload=1)](https://codeclimate.com/github/mikebski/logstash-filter-datepart)
 [![Issue Count](https://codeclimate.com/github/mikebski/logstash-filter-datepart/badges/issue_count.svg?reload=1)](https://codeclimate.com/github/mikebski/logstash-filter-datepart)
