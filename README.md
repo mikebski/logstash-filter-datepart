@@ -46,7 +46,7 @@ This plugin is useful if you want to easily query Logstash data on *day of week*
 
 ### Installation
 
-To manually install the plugin, download the gem and run:
+To manually install the plugin, download the gem from https://rubygems.org/gems/logstash-filter-dateparts and run:
 
 `bin/plugin install --no-verify logstash-filter-dateparts-1.0.0.gem`
 
